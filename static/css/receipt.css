@@ -1,0 +1,166 @@
+/* Receipt Page Specific Styles */
+
+.receipt-success-header {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    color: #fff;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.success-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.receipt-success-header h1 {
+    font-size: 3rem;
+}
+
+.receipt-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.receipt-header {
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+.receipt-header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.receipt-header p {
+    color: #666;
+}
+
+.order-details-box {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.order-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.order-detail-item p:first-child {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.order-detail-item p:last-child {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.order-id {
+    color: #2c3e50;
+}
+
+.table-number {
+    color: #e74c3c;
+}
+
+.payment-completed {
+    color: #27ae60;
+}
+
+.customer-details {
+    margin-bottom: 2rem;
+}
+
+.customer-details h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.order-items {
+    margin-bottom: 2rem;
+}
+
+.order-items h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.order-items table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-items thead {
+    background: #f8f9fa;
+}
+
+.order-items thead tr {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.order-items th {
+    padding: 1rem;
+    text-align: left;
+}
+
+.order-items tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-items td {
+    padding: 1rem;
+}
+
+.order-items tfoot tr {
+    border-top: 2px solid #2c3e50;
+}
+
+.order-items tfoot td {
+    padding: 1.5rem 1rem;
+}
+
+.thank-you-message {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.thank-you-message p {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.receipt-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+@media print {
+    .receipt-success-header,
+    .receipt-actions,
+    nav,
+    footer {
+        display: none !important;
+    }
+    
+    .receipt-container {
+        box-shadow: none;
+        padding: 0;
+    }
+}
