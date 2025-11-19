@@ -1,0 +1,145 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Home - Restaurant{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Delicious Bites</h1>
+    <p>Experience culinary excellence with our chef's special dishes</p>
+    <div style="margin-top: 2rem;">
+        <a href="{% url 'menu' %}" class="btn">View Menu</a>
+        <a href="{% url 'reservations' %}" class="btn btn-secondary" style="margin-left: 1rem;">Book a Table</a>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat-item">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">{{ categories_count }}+</div>
+        <div class="stat-label">Menu Categories</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Delicious Dishes</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">10K+</div>
+        <div class="stat-label">Happy Customers</div>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="features">
+        <div class="feature-box">
+            <div style="font-size: 3rem;">🍽️</div>
+            <h3>Quality Food</h3>
+            <p>Fresh ingredients prepared by expert chefs to deliver exceptional taste in every bite.</p>
+        </div>
+        <div class="feature-box">
+            <div style="font-size: 3rem;">⚡</div>
+            <h3>Fast Service</h3>
+            <p>Quick and efficient service without compromising on quality or presentation.</p>
+        </div>
+        <div class="feature-box">
+            <div style="font-size: 3rem;">👨‍🍳</div>
+            <h3>Expert Chefs</h3>
+            <p>Our experienced chefs bring years of culinary expertise to your table.</p>
+        </div>
+        <div class="feature-box">
+            <div style="font-size: 3rem;">🌟</div>
+            <h3>Great Ambiance</h3>
+            <p>Enjoy your meal in a comfortable and elegant dining environment.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Featured Dishes</h2>
+    <div class="menu-grid">
+        {% for item in featured_items %}
+        <div class="menu-item">
+            {% if item.image %}
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+            {% else %}
+            <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍴</div>
+            {% endif %}
+            <h3>{{ item.name }}</h3>
+            <p style="color: #666; margin: 0.5rem 0;">{{ item.description }}</p>
+            <p class="price">₹{{ item.price }}</p>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+            <p style="font-size: 1.2rem; color: #666;">Our delicious menu items are being prepared. Check back soon!</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin: 3rem 0; display: flex; gap: 1rem; justify-content: center;">
+        <a href="{% url 'menu' %}" class="btn">View Full Menu</a>
+        <a href="{% url 'order_food' %}" class="btn">🛒 Order Now</a>
+    </div>
+
+    <!-- Our Chefs Section -->
+    <h2 class="section-title">Meet Our Expert Chefs</h2>
+    <div class="chefs-grid">
+        {% for chef in chefs %}
+        <div class="chef-card">
+            {% if chef.image %}
+            <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="chef-image">
+            {% else %}
+            <div class="chef-image-placeholder">👨‍🍳</div>
+            {% endif %}
+            <div class="chef-info">
+                <h3>{{ chef.name }}</h3>
+                <p class="chef-position">{{ chef.position }}</p>
+                {% if chef.specialty %}
+                <p class="chef-specialty">🍴 {{ chef.specialty }}</p>
+                {% endif %}
+                <p class="chef-experience">{{ chef.experience_years }}+ Years Experience</p>
+                <p class="chef-bio">{{ chef.bio|truncatewords:20 }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+            <p style="font-size: 1.2rem; color: #666;">Our talented chefs are preparing amazing dishes for you!</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Customer Reviews Section -->
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="reviews-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+            <div class="review-header">
+                {% if review.image %}
+                <img src="{{ review.image.url }}" alt="{{ review.customer_name }}" class="review-avatar">
+                {% else %}
+                <div class="review-avatar-placeholder">{{ review.customer_name|first }}</div>
+                {% endif %}
+                <div>
+                    <h4>{{ review.customer_name }}</h4>
+                    <div class="review-rating">{{ review.get_stars }}</div>
+                </div>
+            </div>
+            <p class="review-comment">"{{ review.comment }}"</p>
+            <p class="review-date">{{ review.created_at|date:"M d, Y" }}</p>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+            <p style="font-size: 1.2rem; color: #666;">Be the first to leave a review!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div style="background: #f8f9fa; padding: 4rem 2rem; margin-top: 4rem;">
+    <div class="container" style="text-align: center;">
+        <h2 class="section-title">Ready to Dine With Us?</h2>
+        <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">Reserve your table now and experience unforgettable dining</p>
+        <a href="{% url 'reservations' %}" class="btn">Book a Table</a>
+    </div>
+</div>
+{% endblock %}

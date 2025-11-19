@@ -1,0 +1,35 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Menu - Restaurant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Our Menu</h1>
+    
+    {% for category in categories %}
+    <div class="category">
+        <h2>{{ category.name }}</h2>
+        {% if category.description %}
+        <p>{{ category.description }}</p>
+        {% endif %}
+        
+        <div class="menu-grid">
+            {% for item in category.items.all %}
+            {% if item.is_available %}
+            <div class="menu-item">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 100%; border-radius: 4px; margin-bottom: 1rem;">
+                {% endif %}
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
+                <p class="price">{₹{ item.price }}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <p>Menu coming soon!</p>
+    {% endfor %}
+</div>
+{% endblock %}

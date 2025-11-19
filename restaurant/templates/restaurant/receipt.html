@@ -1,0 +1,116 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block title %}Receipt - Order {{ order.order_id }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/receipt.css' %}">
+{% endblock %}
+
+{% block content %}
+<div style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: #fff; text-align: center; padding: 4rem 2rem;">
+    <div style="font-size: 5rem; margin-bottom: 1rem;">✅</div>
+    <h1 style="font-size: 3rem;">Payment Successful!</h1>
+    <p style="font-size: 1.2rem;">Your order has been confirmed</p>
+</div>
+
+<div class="container">
+    <div style="max-width: 800px; margin: 2rem auto; background: #fff; border-radius: 10px; padding: 3rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        <!-- Receipt Header -->
+        <div style="text-align: center; border-bottom: 2px solid #e0e0e0; padding-bottom: 2rem; margin-bottom: 2rem;">
+            <h1 style="color: #2c3e50; font-size: 2.5rem; margin-bottom: 0.5rem;">Delicious Bites</h1>
+            <p style="color: #666;">123 Restaurant Street, Food City, FC 12345</p>
+            <p style="color: #666;">Phone: (555) 123-4567</p>
+        </div>
+        
+        <!-- Order Details -->
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <p style="color: #666; margin-bottom: 0.5rem;">Order ID</p>
+                    <p style="font-size: 1.3rem; font-weight: bold; color: #2c3e50;">{{ order.order_id }}</p>
+                </div>
+                <div>
+                    <p style="color: #666; margin-bottom: 0.5rem;">Table Number</p>
+                    <p style="font-size: 1.3rem; font-weight: bold; color: #e74c3c;">Table #{{ order.table_number }}</p>
+                </div>
+                <div>
+                    <p style="color: #666; margin-bottom: 0.5rem;">Date & Time</p>
+                    <p style="font-weight: bold;">{{ order.created_at|date:"M d, Y - h:i A" }}</p>
+                </div>
+                <div>
+                    <p style="color: #666; margin-bottom: 0.5rem;">Payment Status</p>
+                    <p style="font-weight: bold; color: #27ae60;">✓ {{ order.payment_status|upper }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Details -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: #2c3e50; margin-bottom: 1rem;">Customer Details</h3>
+            <p><strong>Name:</strong> {{ order.customer_name }}</p>
+            <p><strong>Email:</strong> {{ order.customer_email }}</p>
+            <p><strong>Phone:</strong> {{ order.customer_phone }}</p>
+            <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+        </div>
+        
+        <!-- Order Items -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: #2c3e50; margin-bottom: 1rem;">Order Items</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #e0e0e0;">
+                        <th style="padding: 1rem; text-align: left;">Item</th>
+                        <th style="padding: 1rem; text-align: center;">Qty</th>
+                        <th style="padding: 1rem; text-align: right;">Price</th>
+                        <th style="padding: 1rem; text-align: right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                    <tr style="border-bottom: 1px solid #f0f0f0;">
+                        <td style="padding: 1rem;">{{ item.menu_item.name }}</td>
+                        <td style="padding: 1rem; text-align: center;">{{ item.quantity }}</td>
+                        <td style="padding: 1rem; text-align: right;">₹{{ item.price }}</td>
+                        <td style="padding: 1rem; text-align: right; font-weight: bold;">${{ item.get_total|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr style="border-top: 2px solid #2c3e50;">
+                        <td colspan="3" style="padding: 1.5rem; text-align: right; font-size: 1.3rem; font-weight: bold;">
+                            Total Amount:
+                        </td>
+                        <td style="padding: 1.5rem; text-align: right; font-size: 1.5rem; font-weight: bold; color: #27ae60;">
+                            ₹{{ order.total_amount }}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <!-- Footer Message -->
+        <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 8px; margin-top: 2rem;">
+            <p style="font-size: 1.1rem; color: #2c3e50; margin-bottom: 1rem;">
+                <strong>Thank you for dining with us!</strong>
+            </p>
+            <p style="color: #666;">Your food will be served shortly at Table #{{ order.table_number }}</p>
+            <p style="color: #666; margin-top: 1rem;">A confirmation email has been sent to {{ order.customer_email }}</p>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
+            <button onclick="window.print()" class="btn">🖨️ Print Receipt</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">← Back to Home</a>
+            <a href="{% url 'order_food' %}" class="btn">Order More</a>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    nav, footer, button, .btn { display: none !important; }
+    body { background: white; }
+}
+</style>
+{% endblock %}

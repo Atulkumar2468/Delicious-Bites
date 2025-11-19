@@ -1,0 +1,75 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Book a Table - Restaurant{% endblock %}
+
+{% block content %}
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; padding: 5rem 2rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Reserve Your Table</h1>
+    <p style="font-size: 1.2rem;">Book your dining experience with us</p>
+</div>
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <h2 style="text-align: center; color: #2c3e50; margin-bottom: 2rem;">Reservation Details</h2>
+        
+        <label>Full Name *</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
+        
+        <div class="form-row">
+            <div>
+                <label>Email *</label>
+                <input type="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div>
+                <label>Phone Number *</label>
+                <input type="tel" name="phone" placeholder="+1 234 567 8900" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div>
+                <label>Date *</label>
+                <input type="date" name="date" required>
+            </div>
+            <div>
+                <label>Time *</label>
+                <input type="time" name="time" required>
+            </div>
+        </div>
+        
+        <label>Number of Guests *</label>
+        <select name="guests" required>
+            <option value="">Select number of guests</option>
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+            <option value="5">5 Guests</option>
+            <option value="6">6 Guests</option>
+            <option value="7">7 Guests</option>
+            <option value="8">8 Guests</option>
+            <option value="9">9 Guests</option>
+            <option value="10">10+ Guests</option>
+        </select>
+        
+        <label>Special Requests (Optional)</label>
+        <textarea name="special_requests" rows="4" placeholder="Any dietary restrictions, allergies, or special occasions we should know about?"></textarea>
+        
+        <div style="text-align: center;">
+            <button type="submit">Confirm Reservation</button>
+        </div>
+    </form>
+    
+    <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem;">
+        <h3 style="color: #2c3e50; margin-bottom: 1rem;">Reservation Information</h3>
+        <ul style="list-style: none; line-height: 2;">
+            <li>📞 For large groups (10+ guests), please call us at: <strong>7004125809</strong></li>
+            <li>⏰ Reservations are available from 11:00 AM to 10:00 PM</li>
+            <li>✉️ You will receive a confirmation email within 24 hours</li>
+            <li>🕐 Please arrive 10 minutes before your reservation time</li>
+            <li>❌ Cancellations must be made at least 2 hours in advance</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

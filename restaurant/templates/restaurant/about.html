@@ -1,0 +1,21 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}About - Restaurant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>About Us</h1>
+    
+    {% if about %}
+    <div style="margin-top: 2rem;">
+        {% if about.image %}
+        <img src="{{ about.image.url }}" alt="{{ about.title }}" style="width: 100%; max-width: 800px; border-radius: 8px; margin-bottom: 2rem;">
+        {% endif %}
+        <h2>{{ about.title }}</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8;">{{ about.content }}</p>
+    </div>
+    {% else %}
+    <p>Welcome to our restaurant! We serve delicious food made with love and the finest ingredients.</p>
+    {% endif %}
+</div>
+{% endblock %}

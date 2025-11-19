@@ -1,0 +1,89 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart - Restaurant{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; text-align: center; padding: 4rem 2rem;">
+    <h1 style="font-size: 3rem;">Your Cart</h1>
+</div>
+
+<div class="container">
+    {% if cart_items %}
+    <div style="background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e0e0e0;">
+                    <th style="padding: 1rem; text-align: left;">Item</th>
+                    <th style="padding: 1rem; text-align: center;">Price</th>
+                    <th style="padding: 1rem; text-align: center;">Quantity</th>
+                    <th style="padding: 1rem; text-align: right;">Subtotal</th>
+                    <th style="padding: 1rem; text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                    <td style="padding: 1rem;">
+                        <strong>{{ item.name }}</strong>
+                    </td>
+                    <td style="padding: 1rem; text-align: center;">${{ item.price }}</td>
+                    <td style="padding: 1rem; text-align: center;">
+                        <form method="post" action="{% url 'update_cart' item.id %}" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99" 
+                                   style="width: 60px; padding: 0.5rem; text-align: center; border: 1px solid #ddd; border-radius: 4px;">
+                            <button type="submit" style="padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                Update
+                            </button>
+                        </form>
+                    </td>
+                    <td style="padding: 1rem; text-align: right; font-weight: bold; color: #27ae60;">
+                        ₹{{ item.subtotal|floatformat:2 }}
+                    </td>
+                    <td style="padding: 1rem; text-align: center;">
+                        <a href="{% url 'remove_from_cart' item.id %}" 
+                           style="color: #e74c3c; text-decoration: none; font-weight: bold;"
+                           onclick="return confirm('Remove this item from cart?')">
+                            ❌ Remove
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr style="border-top: 2px solid #e0e0e0;">
+                    <td colspan="3" style="padding: 1.5rem; text-align: right; font-size: 1.3rem; font-weight: bold;">
+                        Total:
+                    </td>
+                    <td style="padding: 1.5rem; text-align: right; font-size: 1.5rem; font-weight: bold; color: #27ae60;">
+                        ₹{{ total|floatformat:2 }}
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 2rem; gap: 1rem;">
+            <a href="{% url 'order_food' %}" class="btn btn-secondary">← Continue Shopping</a>
+            <a href="{% url 'checkout' %}" class="btn">Proceed to Checkout →</a>
+        </div>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem;">
+        <div style="font-size: 5rem; margin-bottom: 1rem;">🛒</div>
+        <h2>Your cart is empty</h2>
+        <p style="color: #666; margin: 1rem 0;">Add some delicious items to get started!</p>
+        <a href="{% url 'order_food' %}" class="btn">Browse Menu</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

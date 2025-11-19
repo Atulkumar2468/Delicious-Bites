@@ -1,0 +1,18 @@
+{% extends 'restaurant/base.html' %}
+
+{% block title %}Contact - Restaurant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Contact Us</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+{% endblock %}
