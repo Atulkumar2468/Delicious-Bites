@@ -87,7 +87,7 @@
                 
                 <div style="display: flex; justify-content: space-between; padding: 1.5rem 0; margin-top: 1rem; border-top: 2px solid #2c3e50;">
                     <strong style="font-size: 1.3rem;">Total Amount:</strong>
-                    <strong style="font-size: 1.5rem; color: #27ae60;">${{ total|floatformat:2 }}</strong>
+                    <strong style="font-size: 1.5rem; color: #27ae60;">₹{{ total|floatformat:2 }}</strong>
                 </div>
                 
                 <a href="{% url 'view_cart' %}" style="display: block; text-align: center; color: #667eea; text-decoration: none; margin-top: 1rem;">
@@ -98,3 +98,4 @@
     </div>
 </div>
 {% endblock %}
+
