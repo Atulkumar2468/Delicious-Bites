@@ -252,7 +252,7 @@ def payment(request):
         
         # Send confirmation email
         try:
-            items_text = '\n'.join([f"  {item['quantity']}x {item['name']} - ${item['price'] * item['quantity']:.2f}" 
+            items_text = '\n'.join([f"  {item['quantity']}x {item['name']} - ₹{item['price'] * item['quantity']:.2f}" 
                                    for item in cart.values()])
             
             send_mail(
@@ -268,7 +268,7 @@ Date: {datetime.now().strftime("%Y-%m-%d %H:%M")}
 Items Ordered:
 {items_text}
 
-Total Amount: ${total:.2f}
+Total Amount: ₹{total:.2f}
 Payment Method: {payment_method}
 Payment Status: Completed
 
@@ -300,3 +300,4 @@ def receipt(request, order_id):
         'order': order,
         'order_items': order_items
     })
+
